@@ -28,6 +28,8 @@ public static class Main
 
     public static void Update()
     {
+        Graphic.Update();
+
         EnginePlayer.Update();
     }
 }

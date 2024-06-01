@@ -65,9 +65,6 @@ public class Inspector : MonoBehaviour
     void Update()
     {
         Main.Update();
-
         mouse.HandleMouseEvents();
-
-        Graphic.Update();
     }
 }

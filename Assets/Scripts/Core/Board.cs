@@ -115,11 +115,6 @@ public class Board
     // For Threefold detection
     public Dictionary<ulong, int> positionHistory = new Dictionary<ulong, int>();
 
-    // ENGINE
-    public bool enableWhiteEngine = false;
-    public bool enableBlackEngine = false;
-    public int searchDepth;
-
     public Board()
     {
         position = new int[64];
@@ -135,6 +130,7 @@ public class Board
         // loadFen = "r1bq1rk1/pp1n1pp1/4pn1p/3p4/1bPp3B/2NBPN2/PP3PPP/R2Q1RK1 w - - 0 10";
 
         loadFen = initialFen;
+        // loadFen = "k7/8/8/1Q6/8/8/8/K7 w - - 0 1";
         // loadFen = "r2qk2r/ppp2ppp/2n2n2/2bppb2/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
         // loadFen = "3kq3/p7/8/8/8/8/8/3K4 w - - 0 1";
@@ -146,12 +142,6 @@ public class Board
         castlingData = 0;
         enpassantFile = 8;
         fiftyRuleHalfClock = 0;
-
-        // Toggle Engine
-        // enableWhiteEngine = true;
-        enableBlackEngine = true;
-
-        searchDepth = 6;
     }
 
     public void AfterLoadingPosition()

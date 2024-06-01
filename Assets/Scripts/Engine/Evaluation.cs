@@ -4,7 +4,7 @@ using UnityEngine;
 public static class Evaluation
 {
     public static int checkmateEval = 99999;
-    public static int maxDepth = 100;
+    public static int maxDepth = EngineSettings.unlimitedMaxDepth;
 
 
     static Board board;
@@ -23,9 +23,9 @@ public static class Evaluation
         50,  50,  50,  50,  50,  50,  50,  50,
         10,  10,  20,  30,  30,  20,  10,  10,
         5,   5,  10,  25,  25,  10,   5,   5,
-        0,   0,   0,  20,  20,   0,   0,   0,
+        0,   0,   0,  30,  30,   0,   0,   0,
         5,  -5, -10,   0,   0, -10,  -5,   5,
-        5,  10,  10, -20, -20,  10,  10,   5,
+        5,  10,  10, -25, -25,  10,  10,   5,
         0,   0,   0,   0,   0,   0,   0,   0
     };
 
@@ -35,7 +35,7 @@ public static class Evaluation
         -30,  0, 10, 15, 15, 10,  0,-30,
         -30,  5, 15, 20, 20, 15,  5,-30,
         -30,  0, 15, 20, 20, 15,  0,-30,
-        -30,  5, 10, 15, 15, 10,  5,-30,
+        -30,  5, 20, 15, 15, 20,  5,-30,
         -40,-20,  0,  5,  5,  0,-20,-40,
         -50,-40,-30,-30,-30,-30,-40,-50,
     };
@@ -59,7 +59,7 @@ public static class Evaluation
         -5,  0,  0,  0,  0,  0,  0, -5,
         -5,  0,  0,  0,  0,  0,  0, -5,
         -5,  0,  0,  0,  0,  0,  0, -5,
-        0,  0,  0,  5,  5,  0,  0,  0
+        -5,-10,  0,  5,  5,  0,-10, -5
     };
 
     static readonly int[] queenSquareTable =  {
@@ -82,7 +82,7 @@ public static class Evaluation
         -20, -30, -30, -40, -40, -30, -30, -20, 
         -10, -20, -20, -20, -20, -20, -20, -10, 
         20,  20,  -5,  -5,  -5,  -5,  20,  20, 
-        20,  30,  10,  -5,   0,   0,  30,  20
+        20,  30,  10,  -5,   0,  -5,  30,  20
     };
 
     public static readonly int[] kingEndSquareTable = 
@@ -113,8 +113,6 @@ public static class Evaluation
 
         CastleRight();
 
-        // Debug.Log($"{pawnSquareTable.Length} {knightSquareTable.Length} {bishopSquareTable.Length} {rookSquareTable.Length} {queenSquareTable.Length} {kingMidSquareTable.Length} {kingEndSquareTable.Length}");
-
         return eval;
     }
 
@@ -128,6 +126,10 @@ public static class Evaluation
 
     static void CastleRight()
     {
+        // King is in the middle of the board (d, e file)
+        // and king lost its right to castle
+        // Then it's probably bad.
+
         if (!board.isWhiteKingsideCastle && !board.isWhiteQueensideCastle && 
         !(((board.pieceSquares[5].squares[0] % 8) < 3) || ((board.pieceSquares[5].squares[0] % 8) > 4)))
         {

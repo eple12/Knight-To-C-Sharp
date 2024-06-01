@@ -73,7 +73,7 @@ public class Engine
 
         List<Move> legalMoves = MoveGen.GenerateMoves(board);
 
-        MateChecker.MateState mateState = MateChecker.GetPositionState(board, legalMoves, true);
+        MateChecker.MateState mateState = MateChecker.GetPositionState(board, legalMoves);
         if (mateState != MateChecker.MateState.None)
         {
             if (mateState == MateChecker.MateState.Checkmate)
@@ -81,6 +81,10 @@ public class Engine
                 return -Evaluation.checkmateEval + plyFromRoot;
             }
 
+            if (plyFromRoot == 0)
+            {
+                Debug.Log("What");
+            }
             return 0;
         }
 

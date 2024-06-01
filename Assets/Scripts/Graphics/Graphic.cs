@@ -71,7 +71,6 @@ public static class Graphic
     public static void AfterMakingMove()
     {
         board.currentLegalMoves = MoveGen.GenerateMoves(board);
-        //Move.PrintMoveList(board.currentLegalMoves);
 
         HandleCurrentMateState();
     }

@@ -20,7 +20,8 @@ public static class EnginePlayer
     public static void Update()
     {
         // Get Engine Moves
-        if (Graphic.isInMatch && ((board.enableWhiteEngine && board.isWhiteTurn) || (board.enableBlackEngine && !board.isWhiteTurn)))
+        if (Graphic.isInMatch && 
+        ((EngineSettings.enableWhiteEngine && board.isWhiteTurn) || (EngineSettings.enableBlackEngine && !board.isWhiteTurn)))
         {
             if (EngineSettings.useThreading)
             {
@@ -49,7 +50,7 @@ public static class EnginePlayer
         isSearching = true;
 
         engine.isSearching = true;
-        Task.Factory.StartNew (() => engine.StartSearch(board.searchDepth), TaskCreationOptions.LongRunning);
+        Task.Factory.StartNew (() => engine.StartSearch(EngineSettings.searchDepth), TaskCreationOptions.LongRunning);
     }
 
     static void GetBestMove()
@@ -62,7 +63,7 @@ public static class EnginePlayer
 
     static void SingleThreadedSearch()
     {
-        engine.StartSearch(board.searchDepth);
+        engine.StartSearch(EngineSettings.searchDepth);
         Move move = engine.GetMove();
             
         PlayMove(move);
