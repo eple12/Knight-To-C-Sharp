@@ -61,8 +61,7 @@ sysinfo.txt
 *.unitypackage
 *.app
 /WebGL Builds/
-/AndroidVerApk_BurstDebugInformation_DoNotShip/
-/AndroidVerApk-V0-2-1_BurstDebugInformation_DoNotShip/
+/AndroidVerApk*/
 *.zip
 
 # Crashlytics generated file
