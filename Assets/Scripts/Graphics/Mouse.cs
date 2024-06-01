@@ -4,7 +4,7 @@ using UnityEngine;
 public class Mouse : MonoBehaviour
 {
     Board board;
-    List<PieceObject> pieceObjects;
+    // List<PieceObject> pieceObjects;
 
     public Highlight highlight;
     public MoveMaker moveMaker;
@@ -13,13 +13,19 @@ public class Mouse : MonoBehaviour
     public void Initialize()
     {
         board = Graphic.board;
-        pieceObjects = Graphic.pieceObjects;
+        // pieceObjects = Graphic.pieceObjects;
     }
 
     public void HandleMouseEvents()
     {
-        // Not in match => return; (Prevent player from making moves while not in the match)
+        // Not in match, return early
         if (!Graphic.isInMatch)
+        {
+            return;
+        }
+
+        // If in search, return early
+        if (EnginePlayer.isSearching)
         {
             return;
         }
@@ -36,14 +42,18 @@ public class Mouse : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && !isOutOfBounds)
         {
             // No piece in the square or clicked an opponent piece
-            if (board.position[currentMouseSquareIndex] == Piece.None || 
-            (board.isWhiteTurn ? !Piece.IsWhitePiece(board.position[currentMouseSquareIndex]) : Piece.IsWhitePiece(board.position[currentMouseSquareIndex])))
+            if (board.position[currentMouseSquareIndex] == Piece.None)
             {   }
             else if (!Graphic.isPromoting) // Grab a piece
             {
-                // Find the PieceObject
-                Graphic.grabbedPieceObject = moveMaker.FindPieceObject(currentMouseSquareIndex);
-                highlight.ShowLegalMovesFromSquareIndex(currentMouseSquareIndex);
+                PieceObject pieceObject = moveMaker.FindPieceObject(currentMouseSquareIndex);
+
+                if (Piece.IsColor(board.position[pieceObject.SquareIndex], board.isWhiteTurn ? Piece.White : Piece.Black))
+                {
+                    // Find the PieceObject
+                    Graphic.grabbedPieceObject = pieceObject;
+                    highlight.ShowLegalMovesFromSquareIndex(currentMouseSquareIndex);
+                }
             }
 
             // Promotion Click;

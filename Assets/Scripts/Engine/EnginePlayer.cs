@@ -9,7 +9,7 @@ public static class EnginePlayer
     public static Board board;
     public static MoveMaker moveMaker;
     static Engine engine;
-    static bool isSearching = false;
+    public static bool isSearching = false;
 
     public static void Initialize()
     {
@@ -22,16 +22,23 @@ public static class EnginePlayer
         // Get Engine Moves
         if (Graphic.isInMatch && ((board.enableWhiteEngine && board.isWhiteTurn) || (board.enableBlackEngine && !board.isWhiteTurn)))
         {
-            if (!isSearching)
+            if (EngineSettings.useThreading)
             {
-                RequestSearch();
+                if (!isSearching)
+                {
+                    RequestSearch();
+                }
+                else
+                {
+                    if (!engine.isSearching)
+                    {
+                        GetBestMove();
+                    }
+                }
             }
             else
             {
-                if (!engine.isSearching)
-                {
-                    GetBestMove();
-                }
+                SingleThreadedSearch();
             }
         }
     }
@@ -50,6 +57,19 @@ public static class EnginePlayer
         isSearching = false;
         Move move = engine.GetMove();
             
+        PlayMove(move);
+    }
+
+    static void SingleThreadedSearch()
+    {
+        engine.StartSearch(board.searchDepth);
+        Move move = engine.GetMove();
+            
+        PlayMove(move);
+    }
+
+    static void PlayMove(Move move)
+    {
         if (move.moveValue != 0)
         {
             Graphic.grabbedPieceObject = moveMaker.FindPieceObject(move.startSquare);

@@ -23,7 +23,6 @@ public static class Main
     static void InitializeAll()
     {
         EnginePlayer.Initialize();
-        engine = new Engine();
         MoveOrder.Initialize();
     }
 
