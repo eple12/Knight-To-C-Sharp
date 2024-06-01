@@ -1,5 +1,12 @@
 # Changelog
 
+## Version Table
+
+- [V0.1a](#version-01a)
+- [V0.2a](#version-02a)
+- [V0.2.1a](#version-021a)
+- [V0.3a](#version-03a)
+
 ## Version 0.1a
 
 > Added
