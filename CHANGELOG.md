@@ -23,3 +23,12 @@
 > Changed
 - Fixed a bug with Search & TT
 - TT is no longer used in search if plyFromRoot is 0
+
+## Version 0.3a
+
+> Added
+- Engine now uses a separate thread for search
+
+> Changed
+- Engine class is no longer static
+- Engine no longer uses simplified threefold checks if TT data cannot be found
