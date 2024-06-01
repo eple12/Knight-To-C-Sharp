@@ -10,29 +10,33 @@ public class Engine
     readonly int ttSize = 64000;
 
     public Move bestMove;
+    public bool isSearching;
+
 
     public Engine()
     {
         board = Main.mainBoard;
         tt = new TranspositionTable(board, ttSize);
+        isSearching = false;
     }
 
-    public Move StartSearch(int depth)
+    public void StartSearch(int depth)
     {
+        isSearching = true;
         bestMove = Move.NullMove;
 
         // Return Null Move
         if (depth <= 0)
         {
-            return bestMove;
+            return;
         }
         
         Search(depth, Infinity.negativeInfinity, Infinity.positiveInfinity, 0);
-
-        return bestMove;
+        
+        EndSearch();
     }
 
-    public int Search(int depth, int alpha, int beta, int plyFromRoot)
+    int Search(int depth, int alpha, int beta, int plyFromRoot)
     {
         // Try looking up the current position in the transposition table.
         // If the same position has already been searched to at least an equal depth
@@ -120,7 +124,7 @@ public class Engine
         return alpha;
     }
 
-    public int QuiescenceSearch(int alpha, int beta)
+    int QuiescenceSearch(int alpha, int beta)
     {
         int ttVal = tt.LookupEvaluation (0, 0, alpha, beta);
         if (ttVal != TranspositionTable.lookupFailed)
@@ -168,4 +172,8 @@ public class Engine
         return bestMove;
     }
 
+    public void EndSearch()
+    {
+        isSearching = false;
+    }
 }
