@@ -1,15 +1,16 @@
 using System;
-using System.Threading;
 using UnityEngine;
 
 public static class EnginePlayer
 {
     public static Board board;
     public static MoveMaker moveMaker;
+    static Engine engine;
 
     public static void Initialize()
     {
         board = Main.mainBoard;
+        engine = Main.engine;
     }
 
     public static void Update()
@@ -23,7 +24,7 @@ public static class EnginePlayer
 
     public static void BestMove()
     {
-        Move move = Engine.StartSearch(board.searchDepth);
+        Move move = engine.StartSearch(board.searchDepth);
             
         if (move.moveValue != 0)
         {

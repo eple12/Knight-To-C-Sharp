@@ -151,7 +151,7 @@ public class Board
         // enableWhiteEngine = true;
         enableBlackEngine = true;
 
-        searchDepth = 4;
+        searchDepth = 6;
     }
 
     public void AfterLoadingPosition()

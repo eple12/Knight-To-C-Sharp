@@ -18,7 +18,7 @@ public static class MoveOrder
     public static void Initialize()
     {
         board = Main.mainBoard;
-        tt = Engine.tt;
+        tt = Main.engine.tt;
 
         moveScores = new List<int>();
     }

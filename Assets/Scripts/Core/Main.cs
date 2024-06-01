@@ -6,6 +6,8 @@ public static class Main
 
     public static MoveMaker moveMaker;
 
+    public static Engine engine;
+
     public static void Initialize()
     {
         Zobrist.GenerateZobristTable();
@@ -13,13 +15,15 @@ public static class Main
         
         mainBoard = new Board();
 
+        engine = new Engine();
+
         InitializeAll();
     }
 
     static void InitializeAll()
     {
         EnginePlayer.Initialize();
-        Engine.Initialize();
+        engine.Initialize();
         MoveOrder.Initialize();
     }
 

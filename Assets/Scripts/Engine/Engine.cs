@@ -2,22 +2,22 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class Engine
+public class Engine
 {
-    static Board board;
-    public static TranspositionTable tt;
+    Board board;
+    public TranspositionTable tt;
 
-    static readonly int ttSize = 64000;
+    readonly int ttSize = 64000;
 
-    public static Move bestMove;
+    public Move bestMove;
 
-    public static void Initialize()
+    public void Initialize()
     {
         board = Main.mainBoard;
         tt = new TranspositionTable(board, ttSize);
     }
 
-    public static Move StartSearch(int depth)
+    public Move StartSearch(int depth)
     {
         bestMove = Move.NullMove;
 
@@ -32,7 +32,7 @@ public static class Engine
         return bestMove;
     }
 
-    public static int Search(int depth, int alpha, int beta, int plyFromRoot)
+    public int Search(int depth, int alpha, int beta, int plyFromRoot)
     {
         // Try looking up the current position in the transposition table.
         // If the same position has already been searched to at least an equal depth
@@ -120,7 +120,7 @@ public static class Engine
         return alpha;
     }
 
-    public static int QuiescenceSearch(int alpha, int beta)
+    public int QuiescenceSearch(int alpha, int beta)
     {
         int ttVal = tt.LookupEvaluation (0, 0, alpha, beta);
         if (ttVal != TranspositionTable.lookupFailed)
@@ -163,5 +163,9 @@ public static class Engine
         return alpha;
     }
 
+    public Move GetMove()
+    {
+        return bestMove;
+    }
 
 }
