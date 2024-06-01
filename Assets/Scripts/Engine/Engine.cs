@@ -11,7 +11,7 @@ public class Engine
 
     public Move bestMove;
 
-    public void Initialize()
+    public Engine()
     {
         board = Main.mainBoard;
         tt = new TranspositionTable(board, ttSize);
