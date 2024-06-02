@@ -130,7 +130,7 @@ public class Board
         // loadFen = "r1bq1rk1/pp1n1pp1/4pn1p/3p4/1bPp3B/2NBPN2/PP3PPP/R2Q1RK1 w - - 0 10";
 
         loadFen = initialFen;
-        // loadFen = "k7/8/8/1Q6/8/8/8/K7 w - - 0 1";
+        // loadFen = "3r3r/8/4p3/6pp/4P2k/1P1q1Q1P/P4PP1/R5K1 w - - 0 1";
         // loadFen = "r2qk2r/ppp2ppp/2n2n2/2bppb2/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
         // loadFen = "3kq3/p7/8/8/8/8/8/3K4 w - - 0 1";

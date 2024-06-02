@@ -86,8 +86,6 @@ public static class MoveOrder
 
             moveScores.Add(score);
         }
-
-
     }
 
     static void SortMoves()

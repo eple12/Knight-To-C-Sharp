@@ -34,8 +34,17 @@
 ## Version 0.3a
 
 > Added
-- Engine now uses a separate thread for search
+- Multithreading
 
 > Changed
+- Engine now uses a separate thread for search
 - Engine class is no longer static
 - Engine no longer uses simplified threefold checks if TT data cannot be found
+
+## Version 0.3.1a
+
+> Added
+- Iterative Deepening
+
+> Changed
+- Engine now uses Iterative Deepening search

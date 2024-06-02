@@ -7,7 +7,7 @@ public class Engine
     Board board;
     public TranspositionTable tt;
 
-    readonly int ttSize = 64000;
+    readonly int ttSize = EngineSettings.ttSize;
 
     public Move bestMove;
     public bool isSearching;
@@ -20,18 +20,23 @@ public class Engine
         isSearching = false;
     }
 
-    public void StartSearch(int depth)
+    public void StartSearch(int maxDepth)
     {
         isSearching = true;
         bestMove = Move.NullMove;
 
         // Return Null Move
-        if (depth <= 0)
+        if (maxDepth <= 0)
         {
             return;
         }
-        
-        Search(depth, Infinity.negativeInfinity, Infinity.positiveInfinity, 0);
+
+        // Iterative Deepening
+
+        for (int depth = 1; depth <= maxDepth; depth++)
+        {
+            Search(depth, Infinity.negativeInfinity, Infinity.positiveInfinity, 0);
+        }
         
         EndSearch();
     }
@@ -81,10 +86,6 @@ public class Engine
                 return -Evaluation.checkmateEval + plyFromRoot;
             }
 
-            if (plyFromRoot == 0)
-            {
-                Debug.Log("What");
-            }
             return 0;
         }
 
