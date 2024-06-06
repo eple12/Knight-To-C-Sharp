@@ -10,6 +10,7 @@ public static class EnginePlayer
     public static MoveMaker moveMaker;
     static Engine engine;
     public static bool isSearching = false;
+    static CancellationTokenSource searchTimer;
 
     public static void Initialize()
     {
@@ -51,12 +52,16 @@ public static class EnginePlayer
 
         engine.isSearching = true;
         Task.Factory.StartNew (() => engine.StartSearch(EngineSettings.searchDepth), TaskCreationOptions.LongRunning);
+
+        searchTimer = new CancellationTokenSource();
+        Task.Delay(EngineSettings.searchMs, searchTimer.Token).ContinueWith((t) => {TimeOutThreadedSearch();});
     }
 
     static void GetBestMove()
     {
         isSearching = false;
         Move move = engine.GetMove();
+        searchTimer.Cancel();
             
         PlayMove(move);
     }
@@ -81,5 +86,10 @@ public static class EnginePlayer
         {
             Debug.Log("Null Move Returned");
         }
+    }
+
+    static void TimeOutThreadedSearch()
+    {
+        engine.TimeOut();
     }
 }

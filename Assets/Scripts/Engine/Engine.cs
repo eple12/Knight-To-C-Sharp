@@ -11,6 +11,7 @@ public class Engine
 
     public Move bestMove;
     public bool isSearching;
+    bool cancellationRequested;
 
 
     public Engine()
@@ -18,12 +19,14 @@ public class Engine
         board = Main.mainBoard;
         tt = new TranspositionTable(board, ttSize);
         isSearching = false;
+        cancellationRequested = false;
     }
 
     public void StartSearch(int maxDepth)
     {
-        isSearching = true;
-        bestMove = Move.NullMove;
+        isSearching = true; 
+        cancellationRequested = false;
+        bestMove = MoveGen.GenerateMoves(board)[0];
 
         // Return Null Move
         if (maxDepth <= 0)
@@ -35,7 +38,17 @@ public class Engine
 
         for (int depth = 1; depth <= maxDepth; depth++)
         {
-            Search(depth, Infinity.negativeInfinity, Infinity.positiveInfinity, 0);
+            if (cancellationRequested)
+            {
+                break;
+            }
+
+            int evalThisIteration = Search(depth, Infinity.negativeInfinity, Infinity.positiveInfinity, 0);
+
+            if (Evaluation.IsMateScore(evalThisIteration))
+            {
+                break;
+            }
         }
         
         EndSearch();
@@ -43,6 +56,11 @@ public class Engine
 
     int Search(int depth, int alpha, int beta, int plyFromRoot)
     {
+        if (cancellationRequested)
+        {
+            return alpha;
+        }
+
         // Try looking up the current position in the transposition table.
         // If the same position has already been searched to at least an equal depth
         // to the search we're doing now,we can just use the recorded evaluation.
@@ -91,11 +109,6 @@ public class Engine
 
         MoveOrder.GetOrderedList(legalMoves);
 
-        if (plyFromRoot == 0)
-        {
-            bestMove = legalMoves[0];
-        }
-
         int evalType = TranspositionTable.UpperBound;
 
         foreach (Move move in legalMoves)
@@ -105,6 +118,11 @@ public class Engine
             int eval = -Search(depth - 1, -beta, -alpha, plyFromRoot + 1);
 
             board.UnmakeMove(move);
+
+            if (cancellationRequested)
+            {
+                return alpha;
+            }
 
             if (eval >= beta)
             {
@@ -124,6 +142,11 @@ public class Engine
             }
 
             tt.StoreEvaluation (depth, plyFromRoot, alpha, evalType, bestMove);
+
+            // if (plyFromRoot == 0 && cancellationRequested)
+            // {
+            //     break;
+            // }
         }
 
         return alpha;
@@ -177,8 +200,13 @@ public class Engine
         return bestMove;
     }
 
-    public void EndSearch()
+    void EndSearch()
     {
         isSearching = false;
+    }
+
+    public void TimeOut()
+    {
+        cancellationRequested = true;
     }
 }

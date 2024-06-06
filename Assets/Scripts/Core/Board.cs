@@ -123,17 +123,13 @@ public class Board
         currentLegalMoves = new List<Move>();
         currentZobristKey = 0;
 
-        // loadFen = "r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - 0 1";
-        // loadFen = "r2qkb1r/pp1b1p1p/2n2np1/1Nppp2Q/1PB1P3/P7/2PP1PPP/R1B1K1NR b KQkq - 1 8";
-
         // EQUAL POSITION
-        // loadFen = "r1bq1rk1/pp1n1pp1/4pn1p/3p4/1bPp3B/2NBPN2/PP3PPP/R2Q1RK1 w - - 0 10";
+        // loadFen = "r2q1rk1/pppb1ppp/1bn5/1B1pP3/3Pn3/5N1P/PP3PP1/RNBQ1RK1 w - - 1 11";
 
         loadFen = initialFen;
-        // loadFen = "3r3r/8/4p3/6pp/4P2k/1P1q1Q1P/P4PP1/R5K1 w - - 0 1";
-        // loadFen = "r2qk2r/ppp2ppp/2n2n2/2bppb2/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
-        // loadFen = "3kq3/p7/8/8/8/8/8/3K4 w - - 0 1";
+        // Puzzle
+        loadFen = "k4q2/n7/B1b5/2N5/8/6Q1/8/6K1 w - - 0 1";
 
         pieceSquares = new PieceList[12];
 
