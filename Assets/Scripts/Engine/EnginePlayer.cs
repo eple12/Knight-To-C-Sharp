@@ -10,6 +10,7 @@ public static class EnginePlayer
     public static MoveMaker moveMaker;
     static Engine engine;
     public static bool isSearching = false;
+    static bool cancelled = false;
     static CancellationTokenSource searchTimer;
 
     public static void Initialize()
@@ -32,6 +33,10 @@ public static class EnginePlayer
                 }
                 else
                 {
+                    if (cancelled)
+                    {
+                        return;
+                    }
                     if (!engine.isSearching)
                     {
                         GetBestMove();
@@ -45,12 +50,22 @@ public static class EnginePlayer
         }
     }
 
+    public static void CancelSearch()
+    {
+        engine?.TimeOut();
+        isSearching = false;
+        cancelled = true;
+        searchTimer?.Cancel();
+    }
+
     static void RequestSearch()
     {
         // Called only once
         isSearching = true;
+        cancelled = false;
 
         engine.isSearching = true;
+        engine.cancellationRequested = false;
         Task.Factory.StartNew (() => engine.StartSearch(EngineSettings.searchDepth), TaskCreationOptions.LongRunning);
 
         searchTimer = new CancellationTokenSource();

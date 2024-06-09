@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PositionLoader : MonoBehaviour
 {
@@ -8,13 +10,44 @@ public class PositionLoader : MonoBehaviour
     List<PieceObject> pieceObjects;
     GameObject[] piecePrefabs;
 
+    public GameObject fenTextObject;
+    TextMeshProUGUI fenTMP;
+    
+    public GameObject placeHolderObject;
+    TextMeshProUGUI placeHolderTMP;
+
+    public GameObject inputFieldObject;
+    TMP_InputField inputField;
+
     public void Initialize()
     {
+        // Initialize Variables
         board = Graphic.board;
         pieceObjects = Graphic.pieceObjects;
         piecePrefabs = Graphic.piecePrefabs;
+        fenTMP = fenTextObject.GetComponent<TextMeshProUGUI>();
+        placeHolderTMP = placeHolderObject.GetComponent<TextMeshProUGUI>();
+        inputField = inputFieldObject.GetComponent<TMP_InputField>();
+
+        Setup();
 
         LoadPositionFromFen(board.loadFen);
+    }
+
+    void Setup()
+    {
+        // Initialize Graphics
+        DestroyAllPieceObjects();
+        Graphic.Reset();
+
+        board.Reset();
+    }
+
+    public void LoadButton()
+    {
+        LoadPositionFromFen(placeHolderTMP.enabled ? board.loadFen : fenTMP.text);
+
+        inputField.text = "";
     }
 
     void PlaceSinglePiece(int piece, int square)
@@ -40,7 +73,7 @@ public class PositionLoader : MonoBehaviour
 
     void LoadPositionFromFen(string fen)
     {
-        DestroyAllPieceObjects();
+        Setup();
 
         for (int i = 0; i < 12; i++)
         {
@@ -49,6 +82,7 @@ public class PositionLoader : MonoBehaviour
                 board.pieceSquares[i] = new PieceList();
             }
             board.pieceSquares[i].squares = new int[16]; // Resets piece squares to 0;
+            board.pieceSquares[i].count = 0;
         }
 
         Dictionary<char, int> fenCharToIndex = new Dictionary<char, int>()
@@ -137,7 +171,9 @@ public class PositionLoader : MonoBehaviour
         board.fiftyRuleHalfClock = splitFen.Length >= 5 && char.IsDigit(splitFen[4].ToCharArray()[0]) ? Convert.ToInt32(splitFen[4]) : 0;
 
         board.currentZobristKey = Zobrist.GetZobristKey(board);
-        board.positionHistory[board.currentZobristKey] = 0;
+        board.positionHistory[board.currentZobristKey] = 1;
+
+        Graphic.AfterLoadingPosition();
     }
 
     void DestroyAllPieceObjects()

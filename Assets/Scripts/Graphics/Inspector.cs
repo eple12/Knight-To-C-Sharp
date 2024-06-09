@@ -48,8 +48,8 @@ public class Inspector : MonoBehaviour
         moveMaker = gameObject.GetComponent<MoveMaker>();
 
         // Components Initialization
-        positionLoader.Initialize();
         highlight.Initialize();
+        positionLoader.Initialize();
         mouse.Initialize();
         moveMaker.Initialize();
 

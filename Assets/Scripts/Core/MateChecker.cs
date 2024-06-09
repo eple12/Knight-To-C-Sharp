@@ -99,32 +99,30 @@ public static class MateChecker
 
     public static void PrintMateState(MateState state)
     {
+        Debug.Log(ToString(state));
+    }
+
+    public static string ToString(MateState state)
+    {
         switch (state)
         {
             case MateState.Checkmate:
-                Debug.Log("Checkmate!");
-                break;
+                return "Checkmate!";
             
             case MateState.Stalemate:
-                Debug.Log("StaleMate!");
-                break;
+                return "Stalemate!";
 
             case MateState.FiftyDraw:
-                Debug.Log("Draw! (50-move rule)");
-                break;
+                return "Draw!\n(Fifty-Move rule)";
 
             case MateState.Threefold:
-                Debug.Log("Draw! (Threefold)");
-                break;
+                return "Draw!\n(Threefold)";        
 
             case MateState.Material:
-                Debug.Log("Draw! (Insufficient material)");
-                break;
+                return "Draw!\n(Insufficient material)";            
             
             default:
-                break;
+                return "";
         }
     }
-
-
 }

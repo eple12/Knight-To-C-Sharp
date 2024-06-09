@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public static class Graphic
@@ -44,6 +45,22 @@ public static class Graphic
         grabbedPieceObject = null;
     }
 
+    public static void Reset()
+    {
+        grabbedPieceObject = null;
+        isInMatch = true;
+        isPromoting = false;
+        currentPromotionSquare = 64;
+        promotionFade.SetActive(false);
+        whitePromotionUI.SetActive(false);
+        blackPromotionUI.SetActive(false);
+        
+        // Graphics
+        startSquareMoveHighlight.SetActive(false);
+        targetSquareMoveHighlight.SetActive(false);
+        grabSquareHighlight.SetActive(false);
+    }
+
     public static void AfterLoadingPosition()
     {
         AfterMakingMove();
@@ -61,6 +78,8 @@ public static class Graphic
             isInMatch = false;
             MateChecker.PrintMateState(mateState);
         }
+        
+        ListenerUI.mateState = mateState;
     }
 
     public static void Update()

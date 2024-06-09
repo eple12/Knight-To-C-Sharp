@@ -11,7 +11,7 @@ public class Engine
 
     public Move bestMove;
     public bool isSearching;
-    bool cancellationRequested;
+    public bool cancellationRequested;
 
 
     public Engine()
@@ -203,6 +203,7 @@ public class Engine
     void EndSearch()
     {
         isSearching = false;
+        cancellationRequested = true;
     }
 
     public void TimeOut()

@@ -129,7 +129,7 @@ public class Board
         loadFen = initialFen;
 
         // Puzzle
-        loadFen = "k4q2/n7/B1b5/2N5/8/6Q1/8/6K1 w - - 0 1";
+        // loadFen = "2k5/8/8/5p2/8/4N3/3K4/8 w - - 0 1";
 
         pieceSquares = new PieceList[12];
 
@@ -142,7 +142,23 @@ public class Board
 
     public void AfterLoadingPosition()
     {
-        // Debug.Log(Evaluation.Evaluate(this));
+        currentLegalMoves = MoveGen.GenerateMoves(this);
+        EnginePlayer.CancelSearch();
+    }
+
+    public void Reset()
+    {
+        position = new int[64];
+        pieceSquares = new PieceList[12];
+        gameStateStack = new Stack<uint>();
+
+        isWhiteTurn = true;
+        currentLegalMoves = new List<Move>();
+        currentZobristKey = 0;
+        castlingData = 0;
+        enpassantFile = 8;
+        fiftyRuleHalfClock = 0;
+        positionHistory.Clear();
     }
 
     public void MakeMove(Move move)
