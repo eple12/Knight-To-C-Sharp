@@ -10,8 +10,8 @@ public class Engine
     readonly int ttSize = EngineSettings.ttSize;
 
     public Move bestMove;
-    public bool isSearching;
-    public bool cancellationRequested;
+    bool isSearching;
+    bool cancellationRequested;
 
 
     public Engine()
@@ -154,6 +154,11 @@ public class Engine
 
     int QuiescenceSearch(int alpha, int beta)
     {
+        if (cancellationRequested)
+        {
+            return alpha;
+        }
+
         int ttVal = tt.LookupEvaluation (0, 0, alpha, beta);
         if (ttVal != TranspositionTable.lookupFailed)
         {
@@ -204,10 +209,28 @@ public class Engine
     {
         isSearching = false;
         cancellationRequested = true;
+    
+        AfterThreadedSearch();
     }
 
     public void TimeOut()
     {
         cancellationRequested = true;
+    }
+
+    public void BeforeThreadedSearch()
+    {
+        isSearching = true;
+        cancellationRequested = false;
+    }
+
+    public bool IsSearching()
+    {
+        return isSearching;
+    }
+
+    void AfterThreadedSearch()
+    {
+        EnginePlayer.AfterThreadedSearch();
     }
 }

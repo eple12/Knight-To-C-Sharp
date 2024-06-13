@@ -13,6 +13,8 @@ public static class EnginePlayer
     static bool cancelled = false;
     static CancellationTokenSource searchTimer;
 
+    static bool cancellationConfirmed = false;
+
     public static void Initialize()
     {
         board = Main.mainBoard;
@@ -37,7 +39,7 @@ public static class EnginePlayer
                     {
                         return;
                     }
-                    if (!engine.isSearching)
+                    if (!engine.IsSearching())
                     {
                         GetBestMove();
                     }
@@ -50,12 +52,30 @@ public static class EnginePlayer
         }
     }
 
+    public static void AfterThreadedSearch()
+    {
+        cancellationConfirmed = true;
+    }
+
     public static void CancelSearch()
     {
+        if (!EngineSettings.useThreading)
+        {
+            return;
+        }
+
+        cancellationConfirmed = false;
         engine?.TimeOut();
-        isSearching = false;
+        
         cancelled = true;
         searchTimer?.Cancel();
+
+        while (isSearching && !cancellationConfirmed)
+        {
+
+        }
+        
+        isSearching = false;
     }
 
     static void RequestSearch()
@@ -64,8 +84,8 @@ public static class EnginePlayer
         isSearching = true;
         cancelled = false;
 
-        engine.isSearching = true;
-        engine.cancellationRequested = false;
+        engine.BeforeThreadedSearch();
+
         Task.Factory.StartNew (() => engine.StartSearch(EngineSettings.searchDepth), TaskCreationOptions.LongRunning);
 
         searchTimer = new CancellationTokenSource();

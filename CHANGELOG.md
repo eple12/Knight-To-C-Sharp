@@ -6,6 +6,7 @@
 - [V0.2a](#version-02a)
 - [V0.2.1a](#version-021a)
 - [V0.3a](#version-03a)
+- [V0.3.1a](#version-031a)
 
 ## Version 0.1a
 
@@ -48,3 +49,14 @@
 
 > Changed
 - Engine now uses Iterative Deepening search
+
+## Version 0.4a
+
+> Added
+- Threaded search timeout
+- UI
+- Custom position loading
+
+> Changed
+- Engine now has a search time limit
+- Position can now be loaded at runtime with a valid FEN string
