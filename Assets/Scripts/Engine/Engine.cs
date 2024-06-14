@@ -31,23 +31,24 @@ public class Engine
         // Return Null Move
         if (maxDepth <= 0)
         {
-            return;
+            
         }
-
-        // Iterative Deepening
-
-        for (int depth = 1; depth <= maxDepth; depth++)
+        else
         {
-            if (cancellationRequested)
+            // Iterative Deepening
+            for (int depth = 1; depth <= maxDepth; depth++)
             {
-                break;
-            }
+                if (cancellationRequested)
+                {
+                    break;
+                }
 
-            int evalThisIteration = Search(depth, Infinity.negativeInfinity, Infinity.positiveInfinity, 0);
+                int evalThisIteration = Search(depth, Infinity.negativeInfinity, Infinity.positiveInfinity, 0);
 
-            if (Evaluation.IsMateScore(evalThisIteration))
-            {
-                break;
+                if (Evaluation.IsMateScore(evalThisIteration))
+                {
+                    break;
+                }
             }
         }
         
@@ -231,6 +232,6 @@ public class Engine
 
     void AfterThreadedSearch()
     {
-        EnginePlayer.AfterThreadedSearch();
+        ThreadingManager.EngineCancelled();
     }
 }

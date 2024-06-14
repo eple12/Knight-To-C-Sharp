@@ -54,6 +54,7 @@ public class Inspector : MonoBehaviour
         moveMaker.Initialize();
 
         Main.moveMaker = moveMaker;
+        Main.positionLoader = positionLoader;
         EnginePlayer.moveMaker = moveMaker;
 
         mouse.highlight = highlight;

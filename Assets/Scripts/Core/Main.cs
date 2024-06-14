@@ -5,6 +5,7 @@ public static class Main
     public static Board mainBoard;
 
     public static MoveMaker moveMaker;
+    public static PositionLoader positionLoader;
 
     public static Engine engine;
 
@@ -30,6 +31,7 @@ public static class Main
     {
         Graphic.Update();
 
+        ThreadingManager.Update();
         EnginePlayer.Update();
     }
 }

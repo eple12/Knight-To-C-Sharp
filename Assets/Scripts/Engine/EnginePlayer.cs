@@ -13,8 +13,6 @@ public static class EnginePlayer
     static bool cancelled = false;
     static CancellationTokenSource searchTimer;
 
-    static bool cancellationConfirmed = false;
-
     public static void Initialize()
     {
         board = Main.mainBoard;
@@ -52,28 +50,17 @@ public static class EnginePlayer
         }
     }
 
-    public static void AfterThreadedSearch()
-    {
-        cancellationConfirmed = true;
-    }
-
     public static void CancelSearch()
     {
-        if (!EngineSettings.useThreading)
-        {
-            return;
-        }
+        // if (!EngineSettings.useThreading)
+        // {
+        //     return;
+        // }
 
-        cancellationConfirmed = false;
         engine?.TimeOut();
         
         cancelled = true;
         searchTimer?.Cancel();
-
-        while (isSearching && !cancellationConfirmed)
-        {
-
-        }
         
         isSearching = false;
     }
@@ -125,6 +112,6 @@ public static class EnginePlayer
 
     static void TimeOutThreadedSearch()
     {
-        engine.TimeOut();
+        engine?.TimeOut();
     }
 }

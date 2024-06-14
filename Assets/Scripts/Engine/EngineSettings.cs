@@ -1,7 +1,7 @@
 public static class EngineSettings
 {
-    public static bool enableWhiteEngine = true;
-    public static bool enableBlackEngine = false;
+    public static bool enableWhiteEngine = false;
+    public static bool enableBlackEngine = true;
     public static bool useThreading = true;
     public static int searchDepth = 8;
     public static int searchMs = 3000;

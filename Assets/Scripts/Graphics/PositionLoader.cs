@@ -43,9 +43,16 @@ public class PositionLoader : MonoBehaviour
         board.Reset();
     }
 
+    // Called when the UI load button is clicked
     public void LoadButton()
     {
-        LoadPositionFromFen(placeHolderTMP.enabled ? board.loadFen : fenTMP.text);
+        ThreadingManager.RequestPositionLoading();
+    }
+
+    public void AfterEngineCancelled()
+    {
+        // LoadPositionFromFen(placeHolderTMP.enabled ? board.loadFen : fenTMP.text);
+        LoadPositionFromFen(inputField.text == "" ? board.loadFen : inputField.text);
 
         inputField.text = "";
     }
@@ -73,7 +80,7 @@ public class PositionLoader : MonoBehaviour
 
     void LoadPositionFromFen(string fen)
     {
-        board.BeforeLoadingPosition();
+        // board.BeforeLoadingPosition();
         Setup();
 
         for (int i = 0; i < 12; i++)
@@ -174,6 +181,7 @@ public class PositionLoader : MonoBehaviour
         board.currentZobristKey = Zobrist.GetZobristKey(board);
         board.positionHistory[board.currentZobristKey] = 1;
 
+        
         Graphic.AfterLoadingPosition();
     }
 
