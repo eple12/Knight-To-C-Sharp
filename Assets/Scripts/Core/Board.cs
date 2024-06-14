@@ -140,16 +140,6 @@ public class Board
         fiftyRuleHalfClock = 0;
     }
 
-    // public void BeforeLoadingPosition()
-    // {
-    //     EnginePlayer.CancelSearch();
-
-    //     // while(Main.engine.IsSearching())
-    //     // {
-    //     //     // SOMETHING WRONG HERE: WHEN LOADING POSITION WHERE IT IS ENGINE'S TURN ****** AAA AEEAEAEAEA
-    //     // }
-    // }
-
     public void AfterLoadingPosition()
     {
         currentLegalMoves = MoveGen.GenerateMoves(this);

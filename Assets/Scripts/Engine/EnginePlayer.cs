@@ -52,11 +52,6 @@ public static class EnginePlayer
 
     public static void CancelSearch()
     {
-        // if (!EngineSettings.useThreading)
-        // {
-        //     return;
-        // }
-
         engine?.TimeOut();
         
         cancelled = true;
