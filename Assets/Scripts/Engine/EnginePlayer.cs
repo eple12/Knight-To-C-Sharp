@@ -31,17 +31,6 @@ public static class EnginePlayer
                 {
                     RequestSearch();
                 }
-                else
-                {
-                    if (cancelled)
-                    {
-                        return;
-                    }
-                    if (!engine.IsSearching())
-                    {
-                        GetBestMove();
-                    }
-                }
             }
             else
             {
@@ -50,11 +39,26 @@ public static class EnginePlayer
         }
     }
 
+    public static void SearchFinished()
+    {
+        if (cancelled)
+        {
+            return;
+        }
+
+        GetBestMove();
+    }
+
     public static void CancelSearch()
     {
-        engine?.TimeOut();
-        
         cancelled = true;
+
+        EndSearch();
+    }
+
+    public static void EndSearch()
+    {
+        engine?.TimeOut();
         searchTimer?.Cancel();
         
         isSearching = false;

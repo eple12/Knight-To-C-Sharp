@@ -30,10 +30,13 @@ public static class ThreadingManager
         cancelled = true;
     }
 
+    // Main thread
     public static void Update()
     {
         if (cancelled)
         {
+            EnginePlayer.SearchFinished();
+
             if (positionLoadingRequested)
             {
                 Main.positionLoader.AfterEngineCancelled();
