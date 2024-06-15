@@ -7,6 +7,8 @@
 - [V0.2.1a](#version-021a)
 - [V0.3a](#version-03a)
 - [V0.3.1a](#version-031a)
+- [V0.4a](#version-04a)
+- [V0.5a](#version-05a)
 
 ## Version 0.1a
 
@@ -60,3 +62,13 @@
 > Changed
 - Engine now has a search time limit
 - Position can now be loaded at runtime with a valid FEN string
+
+## Version 0.5a
+
+> Added
+- Threading Manager
+- Engine settings UI
+
+> Changed
+- Threaded search is now handled with Threading Manager
+- Now turning on and off the engine is now available at runtime with UI
