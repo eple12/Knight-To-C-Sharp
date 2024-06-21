@@ -66,14 +66,21 @@ public static class EnginePlayer
 
     static void RequestSearch()
     {
-        // Called only once
+        // isSearching = true;
+        // cancelled = false;
+
+        // engine.BeforeThreadedSearch();
+
+        ThreadingManager.RequestStartSearch();
+
+        // Task.Factory.StartNew (() => engine.StartSearch(EngineSettings.searchDepth), TaskCreationOptions.LongRunning);
+
+        
+    }
+
+    public static void SearchStarted()
+    {
         isSearching = true;
-        cancelled = false;
-
-        engine.BeforeThreadedSearch();
-
-        Task.Factory.StartNew (() => engine.StartSearch(EngineSettings.searchDepth), TaskCreationOptions.LongRunning);
-
         searchTimer = new CancellationTokenSource();
         Task.Delay(EngineSettings.searchMs, searchTimer.Token).ContinueWith((t) => {TimeOutThreadedSearch();});
     }

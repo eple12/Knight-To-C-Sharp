@@ -26,6 +26,9 @@ public class Engine
     {
         isSearching = true; 
         cancellationRequested = false;
+
+        ThreadingManager.SearchStarted();
+
         bestMove = MoveGen.GenerateMoves(board)[0];
 
         // Return Null Move
@@ -155,10 +158,10 @@ public class Engine
 
     int QuiescenceSearch(int alpha, int beta)
     {
-        if (cancellationRequested)
-        {
-            return alpha;
-        }
+        // if (cancellationRequested)
+        // {
+        //     return alpha;
+        // }
 
         int ttVal = tt.LookupEvaluation (0, 0, alpha, beta);
         if (ttVal != TranspositionTable.lookupFailed)
